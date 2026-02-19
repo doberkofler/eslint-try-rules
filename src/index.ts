@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {writeFileSync} from 'node:fs';
+import {writeFileSync, realpathSync} from 'node:fs';
 import path from 'node:path';
 import {performance} from 'node:perf_hooks';
 import {Command} from 'commander';
@@ -53,7 +53,19 @@ export const main = async (): Promise<void> => {
 };
 
 /* v8 ignore start */
-if (process.argv[1] === import.meta.filename || process.argv[1]?.endsWith('index.mjs')) {
+const isMain = (): boolean => {
+	if (!process.argv[1]) {
+		return false;
+	}
+	try {
+		const scriptPath = realpathSync(process.argv[1]);
+		return scriptPath === import.meta.filename || scriptPath.endsWith('index.mjs');
+	} catch {
+		return false;
+	}
+};
+
+if (isMain()) {
 	try {
 		await main();
 	} catch (error: unknown) {
