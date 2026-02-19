@@ -1,10 +1,11 @@
-# Agent Guide: eslint-try-stricter
+# Agent Guide: eslint-try-rules
 
 This guide provides instructions for agentic coding assistants working in this repository.
 
 ## Project Overview
 
-`eslint-try-stricter` is a CLI tool designed to help developers incrementally adopt stricter ESLint rules. It allows you to test a set of rules against your codebase and generates a report showing which files would fail, without actually modifying your existing ESLint configuration.
+`eslint-try-rules` is a CLI tool designed to help developers incrementally adopt stricter ESLint rules.
+ It allows you to test a set of rules against your codebase and generates a report showing which files would fail, without actually modifying your existing ESLint configuration.
 
 ## Tech Stack
 

@@ -1,6 +1,6 @@
 {
 	"name": "eslint-try-rules",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"type": "module",
 	"license": "MIT",
 	"author": "Dieter Oberkofler",
@@ -11,6 +11,9 @@
 		"eslint",
 		"rules"
 	],
+	"bin": {
+		"eslint-try-rules": "./dist/index.mjs"
+	},
 	"scripts": {
 		"dev": "tsdown --watch",
 		"build": "tsdown",

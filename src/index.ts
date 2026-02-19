@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import {writeFileSync} from 'node:fs';
 import path from 'node:path';
 import {performance} from 'node:perf_hooks';
@@ -18,7 +19,7 @@ export const main = async (): Promise<void> => {
 	const program = new Command();
 
 	program
-		.name('eslint-try-stricter')
+		.name('eslint-try-rules')
 		.description('Try stricter ESLint rules on your codebase.')
 		.argument('[patterns...]', 'Files/directories/globs to lint.', ['.'])
 		.requiredOption('--rules <path>', 'Path to a JSON/JSONC file containing the ESLint rules to test.')
@@ -37,7 +38,7 @@ export const main = async (): Promise<void> => {
 
 	const rules = parseRulesFile(path.resolve(cwd, options.rules));
 
-	console.log(`${ansis.bold.blue('ℹ')} Starting eslint-try-stricter for ${ansis.bold(String(Object.keys(rules).length))} rules...\n`);
+	console.log(`${ansis.bold.blue('ℹ')} Starting eslint-try-rules for ${ansis.bold(String(Object.keys(rules).length))} rules...\n`);
 
 	const finalResults = await runLint(cwd, rules, patterns, options.config ? path.resolve(cwd, options.config) : undefined);
 

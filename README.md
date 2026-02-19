@@ -1,6 +1,6 @@
-# eslint-try-stricter
+# eslint-try-rules
 
-`eslint-try-stricter` is a CLI tool designed to help developers incrementally adopt stricter ESLint rules. It allows you to test a set of rules against your codebase and generates a report showing which files would fail, without actually modifying your existing ESLint configuration.
+`eslint-try-rules` is a CLI tool designed to help developers incrementally adopt stricter ESLint rules. It allows you to test a set of rules against your codebase and generates a report showing which files would fail, without actually modifying your existing ESLint configuration.
 
 ## Features
 
@@ -14,8 +14,22 @@
 
 ## Installation
 
+You can run it directly using `npx`:
+
 ```bash
-npm install -g eslint-try-stricter
+npx eslint-try-rules --rules try-rules.json
+```
+
+Or install it globally:
+
+```bash
+npm install -g eslint-try-rules
+```
+
+Or as a development dependency in your project:
+
+```bash
+npm install -D eslint-try-rules
 ```
 
 ## Usage
@@ -32,7 +46,7 @@ Create a `try-rules.json` (or `.jsonc`) file with the rules you want to test:
 Run the tool:
 
 ```bash
-eslint-try-stricter --rules try-rules.json
+eslint-try-rules --rules try-rules.json
 ```
 
 ### Try the Example

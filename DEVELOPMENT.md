@@ -2,9 +2,7 @@
 
 assuming that we want to switch to tag "0.1.0"
 
-- lint -> `npm run lint`
-- test -> `npm run test`
-- build -> `npm run build`
+- ci -> `npm run ci`
 - increase version in `package.json` to "0.1.0"
 - add -> `git add .`
 - commit -> `git commit -m "feat: ..., fix: ..., chore: ..."`
