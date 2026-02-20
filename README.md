@@ -1,3 +1,8 @@
+  [![NPM Version][npm-image]][npm-url]
+  [![NPM Downloads][downloads-image]][downloads-url]
+  [![Node.js CI](https://github.com/doberkofler/eslint-try-rules/actions/workflows/node.js.yml/badge.svg)](https://github.com/doberkofler/eslint-try-rules/actions/workflows/node.js.yml)
+  [![Coverage Status](https://coveralls.io/repos/github/doberkofler/eslint-try-rules/badge.svg?branch=master)](https://coveralls.io/github/doberkofler/eslint-try-rules?branch=master)
+
 # eslint-try-rules
 
 `eslint-try-rules` is a CLI tool designed to help developers incrementally adopt stricter ESLint rules. It allows you to test a set of rules against your codebase and generates a report showing which files would fail, without actually modifying your existing ESLint configuration.
@@ -78,3 +83,9 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions on how t
 ## License
 
 MIT
+
+[npm-image]: https://img.shields.io/npm/v/eslint-try-rules.svg
+[npm-url]: https://npmjs.org/package/eslint-try-rules
+
+[downloads-image]: https://img.shields.io/npm/dm/eslint-try-rules.svg
+[downloads-url]: https://npmjs.org/package/eslint-try-rules
