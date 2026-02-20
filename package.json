@@ -1,6 +1,6 @@
 {
 	"name": "eslint-try-rules",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"type": "module",
 	"license": "MIT",
 	"author": "Dieter Oberkofler",
@@ -65,6 +65,7 @@
 		"cli-progress": "^3.12.0",
 		"commander": "^14.0.3",
 		"eslint": "^9.31.0",
+		"jiti": "^2.4.2",
 		"strip-json-comments": "^5.0.3",
 		"tinyglobby": "^0.2.15",
 		"zod": "^4.3.6"
