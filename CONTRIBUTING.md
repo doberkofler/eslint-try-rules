@@ -1,6 +1,6 @@
-# Agent Guide: eslint-try-rules
+# Developer Guide: eslint-try-rules
 
-This guide provides instructions for agentic coding assistants working in this repository.
+This guide provides instructions for developers and agentic coding assistants working in this repository.
 
 ## Project Overview
 
@@ -76,6 +76,27 @@ To run a specific test file or test case:
 - `curly: 'error'` is enabled.
 - Avoid disabling ESLint rules unless absolutely necessary. If required, use a comment explaining *why* it is disabled.
 
+### 8. Commit Message Guidelines
+
+We follow the **Conventional Commits** specification. This is **enforced** by `commitlint` and is required for automated changelog generation.
+
+**Format:** `type(scope): subject`
+
+**Common Types:**
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+- `refactor`: A code change that neither fixes a bug nor adds a feature
+- `perf`: A code change that improves performance
+- `test`: Adding missing tests or correcting existing tests
+- `chore`: Changes to the build process or auxiliary tools and libraries such as documentation generation
+
+**Examples:**
+- `feat(cli): add support for jsonc files`
+- `fix(parser): handle empty input gracefully`
+- `docs: update contributing guidelines`
+
 ## Project Structure
 
 - `src/index.ts`: CLI entry point.
@@ -100,19 +121,12 @@ To run a specific test file or test case:
     -   Run `npm run build` to ensure the project still compiles.
 5.  **Document:** Update JSDoc or `README.md` if necessary.
 
-## CLI Usage (for Reference)
+## Release Process
 
-The tool is invoked as follows:
-```bash
-node dist/index.mjs --rules=try-rules.json [--config=eslint.config.js]
-```
-
-- `--rules`: Path to a JSON file containing the ESLint rules to test.
-- `--config`: (Optional) Path to your project's ESLint configuration file.
-
-## Cursor/Copilot Rules
-
-Currently, no specific Cursor or Copilot instruction files are present in this repository. Follow the general guidelines provided in this document.
-
----
-*Note: This file is intended for agentic consumption. Ensure all modifications adhere to these standards.*
+1. **Verify**: `npm run ci`
+2. **Bump Version**: `npm version <patch|minor|major> --no-git-tag-version`
+3. **Update Changelog**: `npm run create-changelog`
+4. **Commit**: `git add . && git commit -m "chore(release): $(node -p 'require("./package.json").version')"`
+5. **Tag & Push**: `git tag v$(node -p 'require("./package.json").version') && git push && git push --tags`
+6. **Create GitHub Release**: `gh release create v$(node -p 'require("./package.json").version') --generate-notes`
+7. **Publish**: `npm publish`

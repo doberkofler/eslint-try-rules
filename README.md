@@ -71,22 +71,9 @@ The tool provides:
 1.  **CLI Report:** A summary of errors and warnings per rule, including file locations.
 2.  **HTML Report:** A detailed, interactive HTML report saved as `eslint-incremental-report.html`.
 
-## Development
+## Contributing
 
-### Build
-```bash
-npm run build
-```
-
-### Lint
-```bash
-npm run lint
-```
-
-### Test
-```bash
-npm run test
-```
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions on how to build, test, and contribute to this project.
 
 ## License
 
