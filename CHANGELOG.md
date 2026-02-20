@@ -1,3 +1,12 @@
+## [0.1.3](https://github.com/doberkofler/eslint-try-rules/compare/v0.1.2...v0.1.3) (2026-02-20)
+
+
+### Bug Fixes
+
+* add missing jiti dependency ([995b35c](https://github.com/doberkofler/eslint-try-rules/commit/995b35c4aff8394bea949626b62493437df6d070))
+
+
+
 ## [0.1.2](https://github.com/doberkofler/eslint-try-rules/compare/v0.1.1...v0.1.2) (2026-02-20)
 
 
