@@ -1,6 +1,14 @@
+## <small>0.1.2 (2026-02-20)</small>
+
+* v0.1.2 ([a968064](https://github.com/doberkofler/eslint-try-rules/commit/a968064))
+* fix: eslint dependency ([c1ef72b](https://github.com/doberkofler/eslint-try-rules/commit/c1ef72b))
+
+
+
 ## <small>0.1.1 (2026-02-20)</small>
 
-* fix: Fixed --help option ([4a322b0](https://github.com/doberkofler/eslint-try-rules/commit/4a322b0))
+* v0.1.1 ([59f6d9e](https://github.com/doberkofler/eslint-try-rules/commit/59f6d9e))
+* fix: --help option ([52478d6](https://github.com/doberkofler/eslint-try-rules/commit/52478d6))
 
 
 
