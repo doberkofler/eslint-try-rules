@@ -1,13 +1,8 @@
-# Publish version
+# Release Process
 
-assuming that we want to switch to tag "0.1.0"
-
-- ci -> `npm run ci`
-- increase version in `package.json` to "0.1.0"
-- add -> `git add .`
-- commit -> `git commit -m "feat: ..., fix: ..., chore: ..."`
-- generate changelog -> `npm run create-changelog`
-- commit changes in CHANGELOG.md to the last commit -> `git commit --amend --no-edit`
-- tag -> `git tag v0.1.0`
-- push -> `git push` and `git push --tags`
-- publish `npm publish`
+1. **Verify**: `npm run ci`
+2. **Bump Version**: `npm version <patch|minor|major> --no-git-tag-version`
+3. **Update Changelog**: `npm run create-changelog`
+4. **Commit**: `git add . && git commit -m "chore(release): $(node -p 'require("./package.json").version')"`
+5. **Tag & Push**: `git tag v$(node -p 'require("./package.json").version') && git push && git push --tags`
+6. **Publish**: `npm publish`
