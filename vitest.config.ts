@@ -5,6 +5,7 @@ export default defineConfig({
 		exclude: ['**/node_modules/**', '**/dist/**'],
 		coverage: {
 			provider: 'v8',
+			reporter: ['text', 'lcov'],
 			include: ['src/**/*.ts'],
 			thresholds: {
 				lines: 100,

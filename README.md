@@ -1,7 +1,7 @@
   [![NPM Version][npm-image]][npm-url]
   [![NPM Downloads][downloads-image]][downloads-url]
   [![Node.js CI](https://github.com/doberkofler/eslint-try-rules/actions/workflows/node.js.yml/badge.svg)](https://github.com/doberkofler/eslint-try-rules/actions/workflows/node.js.yml)
-  [![Coverage Status](https://coveralls.io/repos/github/doberkofler/eslint-try-rules/badge.svg?branch=master)](https://coveralls.io/github/doberkofler/eslint-try-rules?branch=master)
+  [![Coverage Status](https://coveralls.io/repos/github/doberkofler/eslint-try-rules/badge.svg?branch=main)](https://coveralls.io/github/doberkofler/eslint-try-rules?branch=main)
 
 # eslint-try-rules
 
