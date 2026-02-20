@@ -1,6 +1,7 @@
 node_modules
 *.jsonc
 *.html
+*.tgz
 dist
 coverage
 .vscode/*

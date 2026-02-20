@@ -9,7 +9,7 @@ import globals from 'globals';
 
 export default defineConfig([
 	{
-		ignores: ['**/.*', 'node_modules/**', 'coverage/**', 'dist/**', 'eslint.config.js'],
+		ignores: ['**/.*', 'node_modules/**', 'coverage/**', 'dist/**', 'eslint.config.js', 'commitlint.config.js'],
 	},
 
 	{
