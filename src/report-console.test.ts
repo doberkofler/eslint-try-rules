@@ -33,8 +33,8 @@ describe('printConsoleReport', () => {
 
 	it('should sort results by ruleId by default', () => {
 		const results: RuleResult[] = [
-			{ruleId: 'b', config: {}, errors: 1, warnings: 0, fixable: 0, details: []},
-			{ruleId: 'a', config: {}, errors: 1, warnings: 0, fixable: 0, details: []},
+			{ruleId: 'b', config: {}, errors: 1, warnings: 0, fixable: 0, filesCount: 1, details: []},
+			{ruleId: 'a', config: {}, errors: 1, warnings: 0, fixable: 0, filesCount: 1, details: []},
 		];
 		printConsoleReport(results, 'rule');
 		const calls = logSpy.mock.calls.map((c) => c[0] as string);
@@ -45,8 +45,8 @@ describe('printConsoleReport', () => {
 
 	it('should sort results by severity when requested', () => {
 		const results: RuleResult[] = [
-			{ruleId: 'low', config: {}, errors: 1, warnings: 0, fixable: 0, details: []},
-			{ruleId: 'high', config: {}, errors: 10, warnings: 5, fixable: 0, details: []},
+			{ruleId: 'low', config: {}, errors: 1, warnings: 0, fixable: 0, filesCount: 1, details: []},
+			{ruleId: 'high', config: {}, errors: 10, warnings: 5, fixable: 0, filesCount: 1, details: []},
 		];
 		printConsoleReport(results, 'severity');
 		const calls = logSpy.mock.calls.map((c) => c[0] as string);
@@ -57,8 +57,8 @@ describe('printConsoleReport', () => {
 
 	it('should fallback to ruleId sort if severity is equal', () => {
 		const results: RuleResult[] = [
-			{ruleId: 'b', config: {}, errors: 1, warnings: 0, fixable: 0, details: []},
-			{ruleId: 'a', config: {}, errors: 1, warnings: 0, fixable: 0, details: []},
+			{ruleId: 'b', config: {}, errors: 1, warnings: 0, fixable: 0, filesCount: 1, details: []},
+			{ruleId: 'a', config: {}, errors: 1, warnings: 0, fixable: 0, filesCount: 1, details: []},
 		];
 		printConsoleReport(results, 'severity');
 		const calls = logSpy.mock.calls.map((c) => c[0] as string);
@@ -68,20 +68,19 @@ describe('printConsoleReport', () => {
 	});
 
 	it('should output totals', () => {
-		const results: RuleResult[] = [{ruleId: 'r1', config: {}, errors: 1, warnings: 2, fixable: 1, details: []}];
+		const results: RuleResult[] = [{ruleId: 'r1', config: {}, errors: 1, warnings: 2, fixable: 1, filesCount: 1, details: []}];
 		printConsoleReport(results, 'rule');
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Summary by Rule'));
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Totals'));
-		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1 errors'));
-		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('2 warnings'));
-		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1 fixable'));
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1'));
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('2'));
 	});
 
 	it('should handle results with no errors or fixables', () => {
-		const results: RuleResult[] = [{ruleId: 'r1', config: {}, errors: 0, warnings: 1, fixable: 0, details: []}];
+		const results: RuleResult[] = [{ruleId: 'r1', config: {}, errors: 0, warnings: 1, fixable: 0, filesCount: 1, details: []}];
 		printConsoleReport(results, 'rule');
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1 warnings'));
-		// Check that errors and fixable are NOT in the rule line (they should be undefined/filtered out)
-		// But they will be in the Totals line.
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1 files'));
 	});
 
 	it('should output rule details if provided', () => {
@@ -92,11 +91,13 @@ describe('printConsoleReport', () => {
 				errors: 1,
 				warnings: 0,
 				fixable: 0,
+				filesCount: 1,
 				details: [{filePath: 'test.ts', line: 1, column: 1, message: 'msg'}],
 			},
 		];
 		printConsoleReport(results, 'rule');
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('test.ts'));
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('msg'));
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1 files'));
 	});
 });

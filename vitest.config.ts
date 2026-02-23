@@ -7,11 +7,12 @@ export default defineConfig({
 			provider: 'v8',
 			reporter: ['text', 'lcov'],
 			include: ['src/**/*.ts'],
+			exclude: ['src/types.ts', 'src/index.test.ts', 'src/lint.test.ts', 'src/report-console.test.ts', 'src/report-html.test.ts', 'src/rules.test.ts'],
 			thresholds: {
 				lines: 100,
 				functions: 100,
 				statements: 100,
-				branches: 90,
+				branches: 100,
 			},
 		},
 	},

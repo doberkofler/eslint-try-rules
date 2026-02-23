@@ -17,6 +17,7 @@ describe('generateHtml', () => {
 				errors: 1,
 				warnings: 0,
 				fixable: 0,
+				filesCount: 1,
 				details: [{filePath: 'test.ts', line: 1, column: 1, message: 'error message'}],
 			},
 		];
@@ -34,6 +35,7 @@ describe('generateHtml', () => {
 				errors: 0,
 				warnings: 1,
 				fixable: 0,
+				filesCount: 0,
 				details: [],
 			},
 		];
@@ -50,6 +52,7 @@ describe('generateHtml', () => {
 				errors: 1,
 				warnings: 0,
 				fixable: 0,
+				filesCount: 0,
 				details: [],
 			},
 		];
@@ -60,6 +63,6 @@ describe('generateHtml', () => {
 	it('should handle empty results', () => {
 		const html = generateHtml([]);
 		expect(html).toContain('Totals');
-		expect(html).toContain('0</td>');
+		expect(html).toContain('0 errors');
 	});
 });

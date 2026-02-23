@@ -2,6 +2,15 @@
 
 This guide provides instructions for developers and agentic coding assistants working in this repository.
 
+## Instructions for AI Agents
+
+When working in this repository, please:
+1.  **Always run tests:** Before submitting any change, run `npm run test` and ensure all tests pass.
+2.  **Verify coverage:** Ensure that coverage remains at 100% for all files (excluding `types.ts`).
+3.  **Lint your changes:** Run `npm run lint` to ensure your code follows the project's style.
+4.  **Follow Conventions:** Use **Tabs** for indentation and **Single Quotes** for strings.
+5.  **Conventional Commits:** Use the `type(scope): subject` format for commits.
+
 ## Project Overview
 
 `eslint-try-rules` is a CLI tool designed to help developers incrementally adopt stricter ESLint rules.

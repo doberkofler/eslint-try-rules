@@ -18,7 +18,7 @@ describe('runLint', () => {
 	it('should return empty results if no files found', async () => {
 		// eslint-disable-next-line @typescript-eslint/no-deprecated
 		vi.mocked(glob).mockResolvedValue([]);
-		const result = await runLint(process.cwd(), {}, ['.']);
+		const result = await runLint(process.cwd(), {}, ['.'], undefined, false);
 		expect(result).toEqual([]);
 	});
 
@@ -43,7 +43,7 @@ describe('runLint', () => {
 			return mockESLintInstance as any;
 		});
 
-		const result = await runLint(process.cwd(), {r1: 'error'}, ['.']);
+		const result = await runLint(process.cwd(), {r1: 'error'}, ['.'], undefined, false);
 
 		expect(result).toHaveLength(1);
 		expect(result[0]?.ruleId).toBe('r1');
@@ -64,7 +64,7 @@ describe('runLint', () => {
 			return mockESLintInstance as any;
 		});
 
-		await runLint(process.cwd(), {}, ['.']);
+		await runLint(process.cwd(), {}, ['.'], undefined, true);
 		expect(mockESLintInstance.lintFiles).toHaveBeenCalledWith(['valid.ts']);
 	});
 
@@ -85,7 +85,7 @@ describe('runLint', () => {
 			return mockESLintInstance as any;
 		});
 
-		const result = await runLint(process.cwd(), {}, ['.']);
+		const result = await runLint(process.cwd(), {}, ['.'], undefined, true);
 		expect(result).toHaveLength(1);
 		expect(result[0]?.ruleId).toBe('unknown');
 	});
@@ -107,7 +107,7 @@ describe('runLint', () => {
 			return mockESLintInstance as any;
 		});
 
-		const result = await runLint(process.cwd(), {requested: 'error'}, ['.']);
+		const result = await runLint(process.cwd(), {requested: 'error'}, ['.'], undefined, true);
 		expect(result).toHaveLength(1);
 		expect(result[0]?.ruleId).toBe('unrequested');
 	});
@@ -115,7 +115,7 @@ describe('runLint', () => {
 	it('should expand directory patterns', async () => {
 		// eslint-disable-next-line @typescript-eslint/no-deprecated
 		vi.mocked(glob).mockResolvedValue([]);
-		await runLint(process.cwd(), {}, ['src']);
+		await runLint(process.cwd(), {}, ['src'], undefined, true);
 		// eslint-disable-next-line @typescript-eslint/no-deprecated
 		expect(glob).toHaveBeenCalledWith([expect.stringContaining('src')], expect.any(Object));
 	});
@@ -123,7 +123,7 @@ describe('runLint', () => {
 	it('should handle custom glob patterns', async () => {
 		// eslint-disable-next-line @typescript-eslint/no-deprecated
 		vi.mocked(glob).mockResolvedValue([]);
-		await runLint(process.cwd(), {}, ['*.ts']);
+		await runLint(process.cwd(), {}, ['*.ts'], undefined, true);
 		// eslint-disable-next-line @typescript-eslint/no-deprecated
 		expect(glob).toHaveBeenCalledWith(['*.ts'], expect.any(Object));
 	});

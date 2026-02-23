@@ -20,9 +20,16 @@ export const createRuleFilter =
  * @param {Record<string, unknown>} rules - The rules to test.
  * @param {string[]} patterns - The file patterns to lint.
  * @param {string} [configFile] - Optional path to the ESLint config file.
+ * @param {boolean} [silent] - Optional flag to suppress progress messages.
  * @returns {Promise<RuleResult[]>} The linting results.
  */
-export const runLint = async (cwd: string, rules: Record<string, unknown>, patterns: string[], configFile?: string): Promise<RuleResult[]> => {
+export const runLint = async (
+	cwd: string,
+	rules: Record<string, unknown>,
+	patterns: string[],
+	configFile?: string,
+	silent?: boolean,
+): Promise<RuleResult[]> => {
 	const eslintOptions: ESLint.Options = {
 		cwd,
 		cache: false,
@@ -37,7 +44,9 @@ export const runLint = async (cwd: string, rules: Record<string, unknown>, patte
 
 	const eslint = new ESLint(eslintOptions);
 
-	console.log('Searching for files...');
+	if (!silent) {
+		console.log('Searching for files...');
+	}
 
 	// To mimic ESLint, we expand directories in patterns if they are not already globs
 	const globPatterns = patterns.map((p) => {
@@ -67,7 +76,9 @@ export const runLint = async (cwd: string, rules: Record<string, unknown>, patte
 	}
 
 	if (filesToLint.length === 0) {
-		console.log('No files found to lint.');
+		if (!silent) {
+			console.log('No files found to lint.');
+		}
 		return [];
 	}
 
@@ -78,7 +89,9 @@ export const runLint = async (cwd: string, rules: Record<string, unknown>, patte
 		hideCursor: true,
 	});
 
-	progressBar.start(filesToLint.length, 0);
+	if (!silent) {
+		progressBar.start(filesToLint.length, 0);
+	}
 
 	const allResults: ESLint.LintResult[] = [];
 
@@ -88,10 +101,14 @@ export const runLint = async (cwd: string, rules: Record<string, unknown>, patte
 		const chunk = filesToLint.slice(i, i + chunkSize);
 		const chunkResults = await eslint.lintFiles(chunk);
 		allResults.push(...chunkResults);
-		progressBar.update(Math.min(i + chunkSize, filesToLint.length));
+		if (!silent) {
+			progressBar.update(Math.min(i + chunkSize, filesToLint.length));
+		}
 	}
 
-	progressBar.stop();
+	if (!silent) {
+		progressBar.stop();
+	}
 
 	return processResults(cwd, rules, allResults);
 };
@@ -113,6 +130,7 @@ const processResults = (cwd: string, rules: Record<string, unknown>, results: ES
 			errors: 0,
 			warnings: 0,
 			fixable: 0,
+			filesCount: 0,
 			details: [],
 		});
 	}
@@ -129,6 +147,7 @@ const processResults = (cwd: string, rules: Record<string, unknown>, results: ES
 					errors: 0,
 					warnings: 0,
 					fixable: 0,
+					filesCount: 0,
 					details: [],
 				};
 				ruleMap.set(rId, rr);
@@ -152,5 +171,10 @@ const processResults = (cwd: string, rules: Record<string, unknown>, results: ES
 		}
 	}
 
-	return [...ruleMap.values()].filter((r) => r.errors > 0 || r.warnings > 0);
+	const finalResults = [...ruleMap.values()].filter((r) => r.errors > 0 || r.warnings > 0);
+	for (const r of finalResults) {
+		r.filesCount = new Set(r.details.map((d) => d.filePath)).size;
+	}
+
+	return finalResults;
 };

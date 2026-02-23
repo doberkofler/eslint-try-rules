@@ -17,6 +17,7 @@ export type RuleResult = {
 	errors: number;
 	warnings: number;
 	fixable: number;
+	filesCount: number;
 	details: MessageDetail[];
 };
 

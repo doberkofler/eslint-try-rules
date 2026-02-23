@@ -12,8 +12,9 @@
 - **Test Rules in Isolation:** Run specific rules against your project to see their impact.
 - **Support for JSON and JSONC:** Load rules from standard JSON or JSON files with comments.
 - **Progress Tracking:** Real-time progress bar with ETA during linting.
-- **Detailed Reports:** Generates a colored CLI summary and a comprehensive HTML report.
+- **Detailed Reports:** Generates a colored CLI summary with a tabular rule overview and a comprehensive HTML report.
 - **Flexible Sorting:** Sort results by rule ID or by severity (total errors + warnings).
+- **Silent Mode:** Suppress progress messages for cleaner output.
 - **ESLint 9+ Support:** Built for the new ESLint Flat Config system.
 - **Safe Adoption:** No changes are made to your existing `eslint.config.js`.
 
@@ -69,12 +70,13 @@ This uses the rules defined in `example/try-rules.jsonc`.
 - `--rules <path>`: (Required) Path to the JSON/JSONC file containing the rules to test.
 - `--config <path>`: (Optional) Path to your project's ESLint configuration file (e.g., `eslint.config.js`).
 - `--sort <rule|severity>`: (Optional) Sort results by rule ID (default) or by severity (total errors + warnings).
+- `--silent`: (Optional) Suppress progress messages.
 
 ## Output
 
 The tool provides:
-1.  **CLI Report:** A summary of errors and warnings per rule, including file locations.
-2.  **HTML Report:** A detailed, interactive HTML report saved as `eslint-incremental-report.html`.
+1.  **CLI Report:** A detailed summary of errors and warnings per rule, including file locations, followed by a tabular overview of all rules.
+2.  **HTML Report:** A detailed, interactive HTML report saved as `eslint-try-rules.html`.
 
 ## Contributing
 
@@ -83,6 +85,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed instructions on how t
 ## License
 
 MIT
+
 
 [npm-image]: https://img.shields.io/npm/v/eslint-try-rules.svg
 [npm-url]: https://npmjs.org/package/eslint-try-rules

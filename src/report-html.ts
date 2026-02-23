@@ -41,6 +41,7 @@ export const generateHtml = (results: RuleResult[]): string => {
 			return `<tr>
 				<td>${toggleIcon} ${escapeHtml(r.ruleId)}</td>
 				<td><code>${confStr}</code></td>
+				<td>${r.filesCount}</td>
 				<td>${r.errors}</td>
 				<td>${r.warnings}</td>
 				<td>${r.fixable}</td>
@@ -66,7 +67,7 @@ export const generateHtml = (results: RuleResult[]): string => {
 	<h1>${TITLE}</h1>
 	<table>
 		<thead>
-			<tr><th>Rule</th><th>Config</th><th>Errors</th><th>Warnings</th><th>Fixable</th></tr>
+			<tr><th>Rule</th><th>Config</th><th>Files</th><th>Errors</th><th>Warnings</th><th>Fixable</th></tr>
 		</thead>
 		<tbody>
 			${rows}
@@ -74,9 +75,9 @@ export const generateHtml = (results: RuleResult[]): string => {
 		<tfoot>
 			<tr>
 				<td colspan="2">Totals</td>
-				<td>${totalErr}</td>
-				<td>${totalWarn}</td>
-				<td>${totalFix}</td>
+				<td colspan="4" style="text-align: right;">
+					${totalErr} errors | ${totalWarn} warnings | ${totalFix} fixable
+				</td>
 			</tr>
 		</tfoot>
 	</table>

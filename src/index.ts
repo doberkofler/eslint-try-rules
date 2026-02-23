@@ -20,15 +20,18 @@ export const main = async (): Promise<void> => {
 
 	program
 		.name('eslint-try-rules')
+		.version('0.1.3')
 		.description('Try stricter ESLint rules on your codebase.')
 		.argument('[patterns...]', 'Files/directories/globs to lint.', ['.'])
 		.requiredOption('--rules <path>', 'Path to a JSON/JSONC file containing the ESLint rules to test.')
 		.option('--config <path>', "Path to your project's ESLint configuration file.")
-		.option('--sort <type>', 'Sort results by "rule" (default) or "severity" (errors + warnings).', 'rule');
+		.option('--sort <type>', 'Sort results by "rule" (default) or "severity" (errors + warnings).', 'rule')
+		.option('--output <type>', 'Output format: "console", "html", or "both" (default).', 'both')
+		.option('--silent', 'Suppress progress messages.');
 
 	program.parse();
 
-	const options = program.opts<{rules: string; config?: string; sort: string}>();
+	const options = program.opts<{rules: string; config?: string; sort: string; output: string; silent: boolean}>();
 	const patterns = program.args;
 	const cwd: string = process.cwd();
 
@@ -36,20 +39,33 @@ export const main = async (): Promise<void> => {
 		throw new Error('Invalid sort option. Use "rule" or "severity".');
 	}
 
+	if (options.output !== 'console' && options.output !== 'html' && options.output !== 'both') {
+		throw new Error('Invalid output option. Use "console", "html" or "both".');
+	}
+
 	const rules = parseRulesFile(path.resolve(cwd, options.rules));
 
-	console.log(`${ansis.bold.blue('ℹ')} Starting eslint-try-rules for ${ansis.bold(String(Object.keys(rules).length))} rules...\n`);
+	if (!options.silent) {
+		console.log(ansis.bold.bgBlue.white(' ESLint Try Rules ') + ansis.dim(` v0.1.3`));
+		console.log(`${ansis.bold.blue('ℹ')} Starting eslint-try-rules for ${ansis.bold(String(Object.keys(rules).length))} rules...\n`);
+	}
 
-	const finalResults = await runLint(cwd, rules, patterns, options.config ? path.resolve(cwd, options.config) : undefined);
+	const finalResults = await runLint(cwd, rules, patterns, options.config ? path.resolve(cwd, options.config) : undefined, options.silent);
 
-	printConsoleReport(finalResults, options.sort as SortOption);
+	if (options.output === 'console' || options.output === 'both') {
+		printConsoleReport(finalResults, options.sort as SortOption);
+	}
 
-	const html: string = generateHtml(finalResults);
-	const outPath: string = path.resolve(cwd, 'eslint-incremental-report.html');
-	writeFileSync(outPath, html, 'utf8');
+	let outPath = '';
+	if (options.output === 'html' || options.output === 'both') {
+		const html: string = generateHtml(finalResults);
+		outPath = path.resolve(cwd, 'eslint-try-rules.html');
+		writeFileSync(outPath, html, 'utf8');
+	}
 
 	const durationMs: number = (performance.now() - start) / 1000;
-	console.log(`${ansis.bold.green('✔')} Report generated in ${ansis.bold(durationMs.toFixed(2))}s: ${ansis.underline(`file://${outPath}`)}`);
+	const reportMsg = outPath ? `: ${ansis.underline(`file://${outPath}`)}` : '';
+	console.log(`${ansis.bold.green('✔')} Report generated in ${ansis.bold(durationMs.toFixed(2))}s${reportMsg}`);
 };
 
 /* v8 ignore start */

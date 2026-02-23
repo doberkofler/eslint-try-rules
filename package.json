@@ -17,7 +17,6 @@
 	"scripts": {
 		"dev": "tsdown --watch",
 		"build": "tsdown",
-		"prepublishOnly": "npm run build",
 		"lint": "eslint --no-cache . && tsc && prettier --check .",
 		"test": "vitest run --coverage",
 		"example": "tsx src/index.ts src --rules example/try-rules.jsonc",
@@ -34,7 +33,7 @@
 		"./package.json": "./package.json"
 	},
 	"engines": {
-		"node": ">=22.12.0"
+		"node": ">=22"
 	},
 	"repository": {
 		"type": "git",
