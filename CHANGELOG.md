@@ -1,3 +1,12 @@
+# [0.3.0](https://github.com/doberkofler/eslint-try-rules/compare/v0.2.0...v0.3.0) (2026-02-23)
+
+
+### Features
+
+* also show rules without errors or warning and add totals and percentages ([c2c5df7](https://github.com/doberkofler/eslint-try-rules/commit/c2c5df710c727572b755b52fea5aeac6f907d811))
+
+
+
 # [0.2.0](https://github.com/doberkofler/eslint-try-rules/compare/v0.1.3...v0.2.0) (2026-02-23)
 
 
