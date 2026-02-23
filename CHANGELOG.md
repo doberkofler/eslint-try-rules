@@ -1,3 +1,17 @@
+# [0.2.0](https://github.com/doberkofler/eslint-try-rules/compare/v0.1.3...v0.2.0) (2026-02-23)
+
+
+### Bug Fixes
+
+* update coverage badge and CI workflow for Coveralls ([f4a16db](https://github.com/doberkofler/eslint-try-rules/commit/f4a16db07edd13cd68f8dc8dced8c0f14bd5ecd5))
+
+
+### Features
+
+* add summary in console ([d9e58f3](https://github.com/doberkofler/eslint-try-rules/commit/d9e58f35cfdce861203a3220191aa5e02175a2cf))
+
+
+
 ## [0.1.3](https://github.com/doberkofler/eslint-try-rules/compare/v0.1.2...v0.1.3) (2026-02-20)
 
 
