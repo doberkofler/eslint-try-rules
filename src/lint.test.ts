@@ -108,8 +108,9 @@ describe('runLint', () => {
 		});
 
 		const result = await runLint(process.cwd(), {requested: 'error'}, ['.'], undefined, true);
-		expect(result).toHaveLength(1);
-		expect(result[0]?.ruleId).toBe('unrequested');
+		expect(result).toHaveLength(2);
+		expect(result.some((r) => r.ruleId === 'requested')).toBe(true);
+		expect(result.some((r) => r.ruleId === 'unrequested')).toBe(true);
 	});
 
 	it('should expand directory patterns', async () => {

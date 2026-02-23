@@ -74,6 +74,8 @@ describe('printConsoleReport', () => {
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Totals'));
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1'));
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('2'));
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('3')); // Total (1+2)
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('33%')); // % Fix (1/3)
 	});
 
 	it('should handle results with no errors or fixables', () => {
@@ -81,6 +83,24 @@ describe('printConsoleReport', () => {
 		printConsoleReport(results, 'rule');
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1 warnings'));
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1 files'));
+	});
+
+	it('should show fixed icon for rules with no issues', () => {
+		const results: RuleResult[] = [{ruleId: 'r1', config: {}, errors: 0, warnings: 0, fixable: 0, filesCount: 0, details: []}];
+		printConsoleReport(results, 'rule');
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('✔'));
+	});
+
+	it('should show error icon for rules with errors', () => {
+		const results: RuleResult[] = [{ruleId: 'r1', config: {}, errors: 1, warnings: 0, fixable: 0, filesCount: 1, details: []}];
+		printConsoleReport(results, 'rule');
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('✖'));
+	});
+
+	it('should show warning icon for rules with only warnings', () => {
+		const results: RuleResult[] = [{ruleId: 'r1', config: {}, errors: 0, warnings: 1, fixable: 0, filesCount: 1, details: []}];
+		printConsoleReport(results, 'rule');
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('⚠'));
 	});
 
 	it('should output rule details if provided', () => {
@@ -99,5 +119,11 @@ describe('printConsoleReport', () => {
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('test.ts'));
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('msg'));
 		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1 files'));
+	});
+
+	it('should show fixable percentage', () => {
+		const results: RuleResult[] = [{ruleId: 'r1', config: {}, errors: 1, warnings: 1, fixable: 1, filesCount: 1, details: []}];
+		printConsoleReport(results, 'rule');
+		expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('50%'));
 	});
 });

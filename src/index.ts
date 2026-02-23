@@ -9,6 +9,9 @@ import {generateHtml} from './report-html.ts';
 import {printConsoleReport} from './report-console.ts';
 import {type SortOption} from './types.ts';
 import {parseRulesFile} from './rules.ts';
+import packageJson from '../package.json' with {type: 'json'};
+
+const VERSION = packageJson.version;
 
 /**
  * Main execution.
@@ -20,7 +23,7 @@ export const main = async (): Promise<void> => {
 
 	program
 		.name('eslint-try-rules')
-		.version('0.1.3')
+		.version(VERSION)
 		.description('Try stricter ESLint rules on your codebase.')
 		.argument('[patterns...]', 'Files/directories/globs to lint.', ['.'])
 		.requiredOption('--rules <path>', 'Path to a JSON/JSONC file containing the ESLint rules to test.')
@@ -46,7 +49,7 @@ export const main = async (): Promise<void> => {
 	const rules = parseRulesFile(path.resolve(cwd, options.rules));
 
 	if (!options.silent) {
-		console.log(ansis.bold.bgBlue.white(' ESLint Try Rules ') + ansis.dim(` v0.1.3`));
+		console.log(ansis.bold.bgBlue.white(' ESLint Try Rules ') + ansis.dim(` v${VERSION}`));
 		console.log(`${ansis.bold.blue('ℹ')} Starting eslint-try-rules for ${ansis.bold(String(Object.keys(rules).length))} rules...\n`);
 	}
 

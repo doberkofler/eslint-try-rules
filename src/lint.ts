@@ -171,7 +171,7 @@ const processResults = (cwd: string, rules: Record<string, unknown>, results: ES
 		}
 	}
 
-	const finalResults = [...ruleMap.values()].filter((r) => r.errors > 0 || r.warnings > 0);
+	const finalResults = [...ruleMap.values()];
 	for (const r of finalResults) {
 		r.filesCount = new Set(r.details.map((d) => d.filePath)).size;
 	}

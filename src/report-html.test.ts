@@ -63,6 +63,20 @@ describe('generateHtml', () => {
 	it('should handle empty results', () => {
 		const html = generateHtml([]);
 		expect(html).toContain('Totals');
-		expect(html).toContain('0 errors');
+		expect(html).toContain('<td>0</td>');
+	});
+
+	it('should show icons and percentages', () => {
+		const results: RuleResult[] = [
+			{ruleId: 'fixed', config: {}, errors: 0, warnings: 0, fixable: 0, filesCount: 0, details: []},
+			{ruleId: 'error', config: {}, errors: 1, warnings: 0, fixable: 1, filesCount: 1, details: []},
+			{ruleId: 'warn', config: {}, errors: 0, warnings: 1, fixable: 0, filesCount: 1, details: []},
+		];
+		const html = generateHtml(results);
+		expect(html).toContain('&#x2714;'); // Fixed
+		expect(html).toContain('&#x2716;'); // Error
+		expect(html).toContain('&#x26A0;'); // Warn
+		expect(html).toContain('100%'); // Fixable percentage for 'error' rule
+		expect(html).toContain('<td>2</td>'); // Total issues in footer
 	});
 });

@@ -25,6 +25,9 @@ export const generateHtml = (results: RuleResult[]): string => {
 			totalWarn += r.warnings;
 			totalFix += r.fixable;
 
+			const total = r.errors + r.warnings;
+			const fixablePercent = total > 0 ? Math.round((r.fixable / total) * 100) : 0;
+
 			const confStr: string = escapeHtml(JSON.stringify(r.config ?? 'N/A'));
 			let detailsRow = '';
 			let toggleIcon = '<span style="color:#ccc;">&#x25B6;</span>';
@@ -34,20 +37,32 @@ export const generateHtml = (results: RuleResult[]): string => {
 					.map((d): string => `<li><code>${escapeHtml(d.filePath)}:${d.line}:${d.column}</code> - ${escapeHtml(d.message)}</li>`)
 					.join('');
 
-				detailsRow = `<tr style="display:none;background:#f9f9f9;"><td colspan="5"><ul>${list}</ul></td></tr>`;
+				detailsRow = `<tr style="display:none;background:#f9f9f9;"><td colspan="8"><ul>${list}</ul></td></tr>`;
 				toggleIcon = `<span style="cursor:pointer;" onclick="const r=this.closest('tr').nextElementSibling;r.style.display=r.style.display==='none'?'table-row':'none';this.innerHTML=r.style.display==='none'?'&#x25B6;':'&#x25BC;'">&#x25B6;</span>`;
 			}
 
+			let statusIcon = '<span style="color:green;">&#x2714;</span>';
+			if (r.errors > 0) {
+				statusIcon = '<span style="color:red;">&#x2716;</span>';
+			} else if (r.warnings > 0) {
+				statusIcon = '<span style="color:orange;">&#x26A0;</span>';
+			}
+
 			return `<tr>
-				<td>${toggleIcon} ${escapeHtml(r.ruleId)}</td>
+				<td>${toggleIcon} ${statusIcon} ${escapeHtml(r.ruleId)}</td>
 				<td><code>${confStr}</code></td>
 				<td>${r.filesCount}</td>
 				<td>${r.errors}</td>
 				<td>${r.warnings}</td>
+				<td style="font-weight:bold;">${total}</td>
 				<td>${r.fixable}</td>
+				<td>${fixablePercent}%</td>
 			</tr>\n\t\t\t\t${detailsRow}`;
 		})
 		.join('\n\t\t\t\t');
+
+	const totalIssues = totalErr + totalWarn;
+	const totalFixablePercent = totalIssues > 0 ? Math.round((totalFix / totalIssues) * 100) : 0;
 
 	return `<!DOCTYPE html>
 <html lang="en">
@@ -67,17 +82,19 @@ export const generateHtml = (results: RuleResult[]): string => {
 	<h1>${TITLE}</h1>
 	<table>
 		<thead>
-			<tr><th>Rule</th><th>Config</th><th>Files</th><th>Errors</th><th>Warnings</th><th>Fixable</th></tr>
+			<tr><th>Rule</th><th>Config</th><th>Files</th><th>Errors</th><th>Warnings</th><th>Total</th><th>Fixable</th><th>% Fix</th></tr>
 		</thead>
 		<tbody>
 			${rows}
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="2">Totals</td>
-				<td colspan="4" style="text-align: right;">
-					${totalErr} errors | ${totalWarn} warnings | ${totalFix} fixable
-				</td>
+				<td colspan="3">Totals</td>
+				<td>${totalErr}</td>
+				<td>${totalWarn}</td>
+				<td>${totalIssues}</td>
+				<td>${totalFix}</td>
+				<td>${totalFixablePercent}%</td>
 			</tr>
 		</tfoot>
 	</table>
